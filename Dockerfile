@@ -49,6 +49,9 @@ RUN mkdir -p "$CATALINA_HOME" \
         && mv conf $CATALINA_BASE \
         && mkdir -p $CATALINA_BASE/bin \
         && mkdir -p $CATALINA_BASE/lib \
+        && chown -R appuser:appuser $CATALINA_BASE \
+        && chmod o+rx lib bin bin/*.sh \
+        && chmod o+r lib/*.jar bin/*.jar \
 	&& rm bin/*.bat \
 	&& rm tomcat.tar.gz* \
 	&& nativeBuildDir="$(mktemp -d)" \
