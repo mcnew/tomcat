@@ -1,12 +1,8 @@
 FROM razzek/java:jdk-8-alpine
 
-EXPOSE 8080
-CMD ["/opt/tomcat/bin/catalina.sh", "run"]
-
 ENV CATALINA_HOME=/opt/tomcat CATALINA_BASE=/home/appuser/tomcat
 ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$TOMCAT_NATIVE_LIBDIR"
-WORKDIR $CATALINA_BASE
 
 ARG TOMCAT_MAJOR=8
 ARG TOMCAT_VERSION=8.5.4
@@ -96,3 +92,7 @@ RUN mkdir -p "$CATALINA_HOME" \
 		exit 1; \
 	fi
 USER appuser
+WORKDIR $CATALINA_BASE
+
+EXPOSE 8080
+CMD ["/usr/bin/tini", "--", "/opt/tomcat/bin/catalina.sh", "run"]
