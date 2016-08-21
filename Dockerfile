@@ -6,13 +6,14 @@ CMD ["/opt/tomcat/bin/catalina.sh", "run"]
 ENV CATALINA_HOME=/opt/tomcat CATALINA_BASE=/home/appuser/tomcat
 ENV TOMCAT_NATIVE_LIBDIR="$CATALINA_HOME/native-jni-lib"
 ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH:}$TOMCAT_NATIVE_LIBDIR"
-WORKDIR $CATALINA_HOME
+WORKDIR $CATALINA_BASE
 
 ARG TOMCAT_MAJOR=8
 ARG TOMCAT_VERSION=8.5.4
 ARG TOMCAT_TGZ_URL=https://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
 RUN mkdir -p "$CATALINA_HOME" \
+ && cd $CATALINA_HOME \
  && apk add --no-cache gnupg \
  && set -ex \
 	&& for key in \
