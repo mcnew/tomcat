@@ -91,4 +91,3 @@ RUN mkdir -p "$CATALINA_HOME" \
 		echo >&2 "$nativeLines"; \
 		exit 1; \
 	fi
-
